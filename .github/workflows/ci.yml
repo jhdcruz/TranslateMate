@@ -31,10 +31,7 @@ jobs:
       run: chmod -R 777 storage bootstrap/cache
       
     - name: Generate key
-      run: |
-        php artisan config:cache
-        php artisan key:generate
-        php artisan config:cache   # leave it.
+      run: php artisan key:generate
       
     - name: Create Database
       run: |

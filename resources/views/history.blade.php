@@ -1,5 +1,5 @@
 @extends('layouts.app')
 
 @section('content')
-    <livewire:history/>
+    <livewire:history />
 @endsection

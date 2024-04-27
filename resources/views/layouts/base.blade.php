@@ -1,10 +1,10 @@
 <!DOCTYPE html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
+
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     @hasSection('title')
-
         <title>@yield('title') - {{ config('app.name') }}</title>
     @else
         <title>{{ config('app.name') }}</title>
@@ -25,10 +25,11 @@
 </head>
 
 <body class="min-h-screen">
-@yield('body')
+    @yield('body')
 
-<svg hidden class="hidden">
-    @stack('bladeicons')
-</svg>
+    <svg hidden class="hidden">
+        @stack('bladeicons')
+    </svg>
 </body>
+
 </html>

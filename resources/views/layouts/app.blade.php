@@ -26,32 +26,30 @@
 
             <div class="flex align-middle">
                 <a href="{{ route('home') }}"
-                   class="mr-3 font-semibold text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white focus:outline focus:outline-2 focus:rounded-sm focus:outline-indigo-500">Translate</a>
+                    class="mr-3 font-semibold text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white focus:outline focus:outline-2 focus:rounded-sm focus:outline-indigo-500">Translate</a>
 
                 <a href="{{ route('history') }}"
-                   class="mr-3 font-semibold text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white focus:outline focus:outline-2 focus:rounded-sm focus:outline-indigo-500">History</a>
+                    class="mr-3 font-semibold text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white focus:outline focus:outline-2 focus:rounded-sm focus:outline-indigo-500">History</a>
             </div>
 
             <div class="flex align-middle">
                 {{-- Theme Switcher --}}
                 <button aria-label="Toggle dark mode" type="button"
-                        class="mr-4 text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white focus:outline focus:outline-2 focus:rounded-sm focus:outline-indigo-500"
-                        x-data="{
+                    class="mr-4 text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white focus:outline focus:outline-2 focus:rounded-sm focus:outline-indigo-500"
+                    x-data="{
                         isDark: localStorage.theme === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches),
                         toggleTheme() {
                             this.isDark = !this.isDark;
                             localStorage.theme = this.isDark ? 'dark' : 'light';
                             document.documentElement.classList.toggle('dark', this.isDark);
                         }
-                    }"
-                        x-init="document.documentElement.classList.toggle('dark', this.isDark)"
-                        @click="toggleTheme()">
+                    }" x-init="document.documentElement.classList.toggle('dark', this.isDark)" @click="toggleTheme()">
 
                     {{-- if dark --}}
-                    <x-gmdi-dark-mode-o x-show="!isDark" defer/>
+                    <x-gmdi-dark-mode-o x-show="!isDark" defer />
 
                     {{-- if light --}}
-                    <x-gmdi-light-mode-o x-show="isDark" defer/>
+                    <x-gmdi-light-mode-o x-show="isDark" defer />
                 </button>
 
 
@@ -59,20 +57,20 @@
                     @auth
 
                         <button id="dropdownAvatarNameButton" data-dropdown-toggle="dropdownAvatarName"
-                                class="flex items-center text-sm pe-1 font-medium rounded-full  text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white focus:outline focus:outline-2 focus:rounded-sm focus:outline-indigo-500"
-                                type="button">
+                            class="flex items-center text-sm pe-1 font-medium rounded-full  text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white focus:outline focus:outline-2 focus:rounded-sm focus:outline-indigo-500"
+                            type="button">
                             <span class="sr-only">Open user menu</span>
                             {{ Auth::user()->name }}
-                            <svg class="w-2.5 h-2.5 ms-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
-                                 fill="none" viewBox="0 0 10 6">
-                                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
-                                      stroke-width="2" d="m1 1 4 4 4-4"/>
+                            <svg class="w-2.5 h-2.5 ms-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none"
+                                viewBox="0 0 10 6">
+                                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="m1 1 4 4 4-4" />
                             </svg>
                         </button>
 
                         <!-- Dropdown menu -->
                         <div id="dropdownAvatarName"
-                             class="z-10 hidden bg-white divide-y divide-gray-100 rounded-lg shadow w-44 dark:bg-gray-700 dark:divide-gray-600">
+                            class="z-10 hidden bg-white divide-y divide-gray-100 rounded-lg shadow w-44 dark:bg-gray-700 dark:divide-gray-600">
                             <div
                                 class="px-4 py-3 text-sm text-gray-900 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-600 rounded-lg">
                                 <div class="font-medium ">{{ Auth::user()->name }}</div>
@@ -83,21 +81,20 @@
                                 <form method="POST" action="{{ route('logout') }}">
                                     @csrf
                                     <a href="{{ route('logout') }}"
-                                       class="block px-4 py-2 text-sm text-gray-900 dark:text-gray-100 hover:bg-gray-100 dark:hover:bg-gray-600 rounded-lg">
+                                        class="block px-4 py-2 text-sm text-gray-900 dark:text-gray-100 hover:bg-gray-100 dark:hover:bg-gray-600 rounded-lg">
                                         Log out
                                     </a>
                                 </form>
                             </div>
                         </div>
-
                     @else
                         <a href="{{ route('login') }}"
-                           class="font-semibold text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white focus:outline focus:outline-2 focus:rounded-sm focus:outline-indigo-500">Log
+                            class="font-semibold text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white focus:outline focus:outline-2 focus:rounded-sm focus:outline-indigo-500">Log
                             in</a>
 
                         @if (Route::has('register'))
                             <a href="{{ route('register') }}"
-                               class="ml-4 font-semibold text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white focus:outline focus:outline-2 focus:rounded-sm focus:outline-indigo-500">Register</a>
+                                class="ml-4 font-semibold text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white focus:outline focus:outline-2 focus:rounded-sm focus:outline-indigo-500">Register</a>
                         @endif
                     @endauth
                 @endif
@@ -118,5 +115,5 @@
                 &copy; 2024 TranslateMate - All rights reserved.
             </span>
         </div>
-    </div
+    </div>
 @endsection

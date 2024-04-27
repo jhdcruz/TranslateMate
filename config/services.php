@@ -14,6 +14,14 @@ return [
     |
     */
 
+    // Azure Cognitive Services
+    'az' => [
+        'tr1' => env('AZURE_COGNITIVE_KEY1'),
+        'tr2' => env('AZURE_COGNITIVE_KEY2'),
+        'region' => env('AZURE_COGNITIVE_REGION'),
+        'endpoint' => env('AZURE_COGNITIVE_ENDPOINT'),
+    ],
+
     'postmark' => [
         'token' => env('POSTMARK_TOKEN'),
     ],

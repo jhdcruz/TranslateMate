@@ -23,6 +23,10 @@ use Illuminate\Support\Facades\Route;
 
 Route::view('/', 'welcome')->name('home');
 
+Route::middleware('auth')->group(function () {
+    Route::view('/history', 'history')->name('history');
+});
+
 Route::middleware('guest')->group(function () {
     Route::get('login', Login::class)
         ->name('login');

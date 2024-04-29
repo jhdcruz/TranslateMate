@@ -18,6 +18,10 @@ jobs:
     - uses: shivammathur/setup-php@v2
       with:
         php-version: '8.3'
+        extensions: mbstring, intl
+        tools: php-cs-fixer, phpunit
+        ini-values: post_max_size=512M, max_execution_time=180
+        coverage: xdebug
         
     - uses: actions/checkout@v4
     
@@ -39,7 +43,7 @@ jobs:
         touch database/database.sqlite
         php artisan migrate:fresh --seed
       
-    - name: Execute tests (Unit and Feature tests) via PHPUnit/Pest
+    - name: Execute tests via PHPUnit
       env:
         DB_CONNECTION: sqlite
         DB_DATABASE: database/database.sqlite

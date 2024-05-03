@@ -22,6 +22,11 @@ return [
         'endpoint' => env('AZURE_COGNITIVE_ENDPOINT'),
     ],
 
+    'ai' => [
+        'key' => env('OPENAI_KEY'),
+        'endpoint' => env('OPENAI_ENDPOINT'),
+    ],
+
     'postmark' => [
         'token' => env('POSTMARK_TOKEN'),
     ],

@@ -21,6 +21,8 @@ class Translate extends Component
 
     public $to_text = '';
 
+    public $explanation_text = '';
+
     /**
      * @throws ConnectionException
      */
@@ -43,9 +45,6 @@ class Translate extends Component
         Log::debug('ACS parsed languages: ', $this->languages);
     }
 
-    /**
-     * @throws ConnectionException
-     */
     public function translate(): void
     {
         // Get the Azure Cognitive Services key and endpoint from the config
@@ -60,20 +59,25 @@ class Translate extends Component
         ]);
 
         // Make the API call to Azure Cognitive Services
-        $response = Http::withHeaders([
-            'Ocp-Apim-Subscription-Key' => $key,
-            'Ocp-Apim-Subscription-Region' => $region,
-            'Content-Type' => 'application/json; charset=UTF-8',
-        ])->withQueryParameters([
-            'api-version' => '3.0',
-            'from' => $this->from_lang,
-            'to' => $this->to_lang,
-            'allowFallback' => 'true',
-        ])->post($endpoint.'/translate', [
-            [
-                'Text' => $this->from_text,
-            ],
-        ])->json();
+        try {
+            $response = Http::withHeaders([
+                'Ocp-Apim-Subscription-Key' => $key,
+                'Ocp-Apim-Subscription-Region' => $region,
+                'Content-Type' => 'application/json; charset=UTF-8',
+            ])->withQueryParameters([
+                'api-version' => '3.0',
+                'from' => $this->from_lang,
+                'to' => $this->to_lang,
+                'allowFallback' => 'true',
+            ])->post($endpoint.'/translate', [
+                [
+                    'Text' => $this->from_text,
+                ],
+            ])->json();
+        } catch (ConnectionException $e) {
+            Log::error('Azure connection error: '.$e->getMessage());
+            $response = null;
+        }
 
         Log::debug('ACS response: ', $response ?? []);
 
@@ -93,6 +97,38 @@ class Translate extends Component
 
         // this gets updated in the view wire:model `to_text`
         $this->to_text = $tlText ?? 'Something went wrong, please try again later.';
+    }
+
+    public function explain(): void
+    {
+        // use openai to explain the translated message concisely
+        $key = config('services.ai.key');
+        $endpoint = config('services.ai.endpoint');
+
+        try {
+            $response = Http::withHeaders([
+                'Authorization' => 'Bearer '.$key,
+                'Content-Type' => 'application/json',
+            ])->post($endpoint.'/chat/completions', [
+                'model' => 'gpt-3.5-turbo',
+                'messages' => [
+                    [
+                        'role' => 'system',
+                        'content' => 'Behave like a multilingual tour guide, explain the translated texts in a politely concise manner.',
+                    ],
+                    [
+                        'role' => 'user',
+                        'content' => $this->to_text,
+                    ],
+                ],
+            ])->json();
+
+            Log::debug('OpenAI response: ', $response);
+            $this->explanation_text = $response['choices'][0]['message']['content'] ?? 'Something went wrong, please try again later.';
+        } catch (ConnectionException $e) {
+            Log::error('OpenAI connection error: '.$e->getMessage());
+            $this->explanation_text = 'Something went wrong...\n\nDetails:\n'.$e->getMessage();
+        }
     }
 
     public function render(): View

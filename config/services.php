@@ -23,8 +23,8 @@ return [
     ],
 
     'ai' => [
-        'key' => env('OPENAI_KEY'),
-        'endpoint' => env('OPENAI_ENDPOINT'),
+        'key' => env('INFERENCE_API_TOKEN'),
+        'endpoint' => env('INFERENCE_API_URL'),
     ],
 
     'postmark' => [

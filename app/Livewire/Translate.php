@@ -2,7 +2,7 @@
 
 namespace App\Livewire;
 
-use App\Http\Controllers\UtilsController;
+use App\Http\Controllers\InferenceController;
 use App\Models\Translation;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\Client\ConnectionException;
@@ -108,8 +108,12 @@ class Translate extends Component
 
     public function explain(): void
     {
-        // use openai to explain the translated message concisely
-        $this->explanation_text = explain_translated($this->to_text);
+        $utils = new InferenceController();
+        $this->explanation_text = $utils->explain_translated(
+            $this->to_text,
+            collect($this->languages)->firstWhere('code', $this->from_lang)['name'],
+            collect($this->languages)->firstWhere('code', $this->to_lang)['name'],
+        );
     }
 
     public function render(): View

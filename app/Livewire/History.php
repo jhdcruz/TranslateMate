@@ -2,6 +2,7 @@
 
 namespace App\Livewire;
 
+use App\Http\Controllers\InferenceController;
 use App\Models\Translation;
 use Illuminate\View\View;
 use Livewire\Component;
@@ -10,7 +11,6 @@ class History extends Component
 {
     public $history = [];
 
-    public $to_text = '';
     public $explanation_text = '';
 
     public function mount(): void
@@ -20,10 +20,18 @@ class History extends Component
         $this->history = Translation::where('user_id', $user)->latest()->get();
     }
 
-    public function explain(): void
-    {
+    public function explain(
+        string $to_text,
+        string $from_lang_name,
+        string $to_lang_name,
+    ): void {
         // use openai to explain the translated message concisely
-        $this->explanation_text = explain_translated($this->to_text);
+        $utils = new InferenceController();
+        $this->explanation_text = $utils->explain_translated(
+            $to_text,
+            $from_lang_name,
+            $to_lang_name,
+        );
     }
 
     public function render(): View

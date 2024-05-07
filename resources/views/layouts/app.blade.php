@@ -101,7 +101,7 @@
             </div>
         </div>
 
-        <div class="flex justify-center items-center">
+        <div class="flex justify-center h-[83vh] items-start">
             @yield('content')
 
             @isset($slot)
@@ -110,7 +110,7 @@
         </div>
 
         {{-- Footer --}}
-        <div class="flex max-w-screen mt-16 justify-center px-0 py-8 items-center">
+        <div class="flex max-w-screen justify-center px-0 py-8 items-center">
             <span class="mx-2 text-sm text-gray-500 dark:text-gray-400 text-right sm:mx-5">
                 &copy; 2024 TranslateMate - All rights reserved.
             </span>

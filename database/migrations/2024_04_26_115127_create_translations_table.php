@@ -16,11 +16,13 @@ return new class extends Migration
             $table->id();
             $table->timestamps();
             $table->string('from_lang');
+            $table->string('from_lang_name');
             $table->string('to_lang');
+            $table->string('to_lang_name');
             $table->text('from_text');
             $table->text('to_text');
 
-            $table->foreignIdFor(User::class)->onDelete('cascade');
+            $table->foreignIdFor(User::class)->constrained()->onDelete('cascade');
         });
     }
 

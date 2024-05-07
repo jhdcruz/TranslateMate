@@ -17,9 +17,12 @@ class Translation extends Model
     protected $fillable = [
         'created_at',
         'from_lang',
+        'from_lang_name',
         'to_lang',
+        'to_lang_name',
         'from_text',
         'to_text',
+        'user_id',
     ];
 
     /**
@@ -28,7 +31,6 @@ class Translation extends Model
      * @var array<int, string>
      */
     protected $hidden = [
-        'user_id',
         'updated_at',
     ];
 

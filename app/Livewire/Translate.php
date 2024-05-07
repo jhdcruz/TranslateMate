@@ -2,6 +2,7 @@
 
 namespace App\Livewire;
 
+use App\Http\Controllers\UtilsController;
 use App\Models\Translation;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\Client\ConnectionException;
@@ -83,15 +84,21 @@ class Translate extends Component
 
         $tlText = $response[0]['translations'][0]['text'];
         // Save the translation to the database if there is a logged-in user
-        $user = auth()->user();
-        if ($user && $response) {
+        if (auth()->user() && $response) {
+            // get from lang name
+            $fromLangName = collect($this->languages)->firstWhere('code', $this->from_lang)['name'];
+            // get to lang name
+            $toLangName = collect($this->languages)->firstWhere('code', $this->to_lang)['name'];
+
             Translation::create([
                 'from_lang' => $this->from_lang,
+                'from_lang_name' => $fromLangName,
                 'to_lang' => $this->to_lang,
+                'to_lang_name' => $toLangName,
                 'from_text' => $this->from_text,
                 'to_text' => $tlText,
                 'created_at' => now(),
-                'user_id' => $user->id,
+                'user_id' => auth()->id(),
             ]);
         }
 
@@ -102,33 +109,7 @@ class Translate extends Component
     public function explain(): void
     {
         // use openai to explain the translated message concisely
-        $key = config('services.ai.key');
-        $endpoint = config('services.ai.endpoint');
-
-        try {
-            $response = Http::withHeaders([
-                'Authorization' => 'Bearer '.$key,
-                'Content-Type' => 'application/json',
-            ])->post($endpoint.'/chat/completions', [
-                'model' => 'gpt-3.5-turbo',
-                'messages' => [
-                    [
-                        'role' => 'system',
-                        'content' => 'Behave like a multilingual tour guide, explain the translated texts in a politely concise manner.',
-                    ],
-                    [
-                        'role' => 'user',
-                        'content' => $this->to_text,
-                    ],
-                ],
-            ])->json();
-
-            Log::debug('OpenAI response: ', $response);
-            $this->explanation_text = $response['choices'][0]['message']['content'] ?? 'Something went wrong, please try again later.';
-        } catch (ConnectionException $e) {
-            Log::error('OpenAI connection error: '.$e->getMessage());
-            $this->explanation_text = 'Something went wrong...\n\nDetails:\n'.$e->getMessage();
-        }
+        $this->explanation_text = explain_translated($this->to_text);
     }
 
     public function render(): View

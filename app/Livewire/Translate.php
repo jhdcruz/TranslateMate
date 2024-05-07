@@ -22,6 +22,8 @@ class Translate extends Component
 
     public $to_text = '';
 
+    public $to_lang_name = '';
+
     public $explanation_text = '';
 
     /**
@@ -88,13 +90,13 @@ class Translate extends Component
             // get from lang name
             $fromLangName = collect($this->languages)->firstWhere('code', $this->from_lang)['name'];
             // get to lang name
-            $toLangName = collect($this->languages)->firstWhere('code', $this->to_lang)['name'];
+            $this->to_lang_name = collect($this->languages)->firstWhere('code', $this->to_lang)['name'];
 
             Translation::create([
                 'from_lang' => $this->from_lang,
                 'from_lang_name' => $fromLangName,
                 'to_lang' => $this->to_lang,
-                'to_lang_name' => $toLangName,
+                'to_lang_name' => $this->to_lang_name,
                 'from_text' => $this->from_text,
                 'to_text' => $tlText,
                 'created_at' => now(),

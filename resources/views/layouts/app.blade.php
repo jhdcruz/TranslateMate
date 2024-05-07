@@ -20,9 +20,9 @@
     </style>
 
     <div
-        class="min-h-screen content-between bg-gray-100 bg-center bg-dots dark:bg-gray-900 selection:bg-indigo-500 selection:text-white">
+        class="content-between min-h-screen bg-gray-100 bg-center bg-dots dark:bg-gray-900 selection:bg-indigo-500 selection:text-white">
 
-        <div class="p-6 max-w-screen flex items-center align-middle justify-between">
+        <div class="flex items-center justify-between p-6 align-middle max-w-screen">
 
             <div class="flex align-middle">
                 <a href="{{ route('home') }}"
@@ -57,7 +57,7 @@
                     @auth
 
                         <button id="dropdownAvatarNameButton" data-dropdown-toggle="dropdownAvatarName"
-                            class="flex items-center text-sm pe-1 font-medium rounded-full  text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white focus:outline focus:outline-2 focus:rounded-sm focus:outline-indigo-500"
+                            class="flex items-center text-sm font-medium text-gray-600 rounded-full pe-1 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white focus:outline focus:outline-2 focus:rounded-sm focus:outline-indigo-500"
                             type="button">
                             <span class="sr-only">Open user menu</span>
                             {{ Auth::user()->name }}
@@ -72,7 +72,7 @@
                         <div id="dropdownAvatarName"
                             class="z-10 hidden bg-white divide-y divide-gray-100 rounded-lg shadow w-44 dark:bg-gray-700 dark:divide-gray-600">
                             <div
-                                class="px-4 py-3 text-sm text-gray-900 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-600 rounded-lg">
+                                class="px-4 py-3 text-sm text-gray-900 rounded-lg dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-600">
                                 <div class="font-medium ">{{ Auth::user()->name }}</div>
                                 <div class="truncate">{{ Auth::user()->email }}</div>
                             </div>
@@ -81,7 +81,7 @@
                                 <form method="POST" action="{{ route('logout') }}">
                                     @csrf
                                     <a href="{{ route('logout') }}"
-                                        class="block px-4 py-2 text-sm text-gray-900 dark:text-gray-100 hover:bg-gray-100 dark:hover:bg-gray-600 rounded-lg">
+                                        class="block px-4 py-2 text-sm text-gray-900 rounded-lg dark:text-gray-100 hover:bg-gray-100 dark:hover:bg-gray-600">
                                         Log out
                                     </a>
                                 </form>
@@ -101,7 +101,7 @@
             </div>
         </div>
 
-        <div class="flex justify-center h-[83vh] items-start">
+        <div class="flex justify-center h-full md:h-[83vh] items-start">
             @yield('content')
 
             @isset($slot)
@@ -110,8 +110,8 @@
         </div>
 
         {{-- Footer --}}
-        <div class="flex max-w-screen justify-center px-0 py-8 items-center">
-            <span class="mx-2 text-sm text-gray-500 dark:text-gray-400 text-right sm:mx-5">
+        <div class="flex items-center justify-center px-0 py-8 max-w-screen">
+            <span class="mx-2 text-sm text-right text-gray-500 dark:text-gray-400 sm:mx-5">
                 &copy; 2024 TranslateMate - All rights reserved.
             </span>
         </div>

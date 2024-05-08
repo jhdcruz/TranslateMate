@@ -77,13 +77,13 @@
                                 <div class="truncate">{{ Auth::user()->email }}</div>
                             </div>
 
-                            <div class="py-2">
-                                <form method="POST" action="{{ route('logout') }}">
+                            <div class="w-full py-2">
+                                <form class="w-full" method="POST" action="{{ route('logout') }}">
                                     @csrf
-                                    <a href="{{ route('logout') }}"
-                                        class="block px-4 py-2 text-sm text-gray-900 rounded-lg dark:text-gray-100 hover:bg-gray-100 dark:hover:bg-gray-600">
+                                    <button type="submit"
+                                        class="block w-full px-4 py-2 mx-2 text-sm text-gray-900 rounded-lg text-start dark:text-gray-100 hover:bg-gray-100 dark:hover:bg-gray-600">
                                         Log out
-                                    </a>
+                                    </button>
                                 </form>
                             </div>
                         </div>
@@ -101,7 +101,7 @@
             </div>
         </div>
 
-        <div class="flex justify-center h-full md:h-[83vh] items-start">
+        <div class="flex justify-center h-full md:h-[78vh] items-start">
             @yield('content')
 
             @isset($slot)
